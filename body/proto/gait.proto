@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+import "vectors.proto";
+
+enum GaitState {
+    IDLE = 0;
+    RUNNING = 1;
+    STOPPING = 2;
+}
+
+message GaitParameters {
+    // x,y,z,a where x,y,z = movement of each step in mm/s, a = rotation around z in degrees/s
+    Vec4 direction = 1;
+    //Height of each step in mm
+    float step_height = 2;
+}
+
+message GaitStatus {
+    GaitState state = 1;
+    float current_step = 2;
+}
+
+message GaitStart {
+    string name = 1;
+}
+
+message GaitStop {
+    bool force = 1;
+}

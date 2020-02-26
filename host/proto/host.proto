@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+// host/core/N/usage
+message CoreUsage {
+    float user = 1;
+    float system = 2;
+    float idle = 3;
+}
+
+// host/core/N/freq
+message CoreFrequency {
+    float current = 1;
+    float min = 2;
+    float max = 3;
+}

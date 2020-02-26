@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+import "vectors.proto";
+
+/*
+ * Look towards an angle relative to our frame.
+ * Rotate body if necessary
+ */
+message LookAtPosition {
+    Vec4 position = 1;
+    bool modify_attitude = 2;
+}
+
+/*
+ * Look towards and angle relative to our frame.
+ * Rotate body if necessary
+ */
+message LookAtAngle {
+    Vec4 angle = 1;
+    bool modify_attitude = 2;
+}
+
+message EyeColor {
+    Vec4 rgbw = 1;
+}

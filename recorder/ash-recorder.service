@@ -1,0 +1,7 @@
+[Unit]
+WhatIsThis=11
+Documentation=man:nosuchfile(1)
+Requires=different.service
+
+[Service]
+Description=x

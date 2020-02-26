@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "vectors.proto";
+
+/*
+ * Body attitude consisting of translation and rotation
+ */
+message Attitude {
+    Vec4 rotation = 1;
+    Vec4 translation = 2;
+}

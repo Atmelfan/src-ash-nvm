@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+message CsciIdentify {
+    string name = 1;
+}
+
+message StillAlive {
+
+}
+
+/**
+ * CSCI shutdown notification
+ */
+message Exit {
+    string msg = 1;
+
+    enum exit_reason {
+        EXIT = 0;
+        KEYBOARD_INTERRUPT = 1;
+        EXCEPTION = 2;
+        COMMAND = 3;
+    }
+
+    exit_reason reason = 2;
+}
+
+/**
+ * Request CSCI to gracefully shutdown
+ */
+message Shutdown {
+    string msg = 1;
+
+    enum shutdown_reason {
+        USER_SHUTDOWN = 0;
+        ERROR_LOW_BATTERY = 1;
+        ERROR_HW_FAULT = 2;
+    }
+
+    shutdown_reason reason = 2;
+}
+
+

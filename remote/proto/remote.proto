@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+message remote_pan {
+    float pitch = 1;
+    float yaw = 2;
+}
+
+message body_move {
+    float pitch = 1;
+    float yaw = 2;
+    float roll = 3;
+}
