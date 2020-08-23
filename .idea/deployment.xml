@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="GPA-SAM-745">
+  <component name="PublishConfigData" autoUpload="Always" serverName="ash@192.168.0.37:22" showNewOnTargetInSync="false">
     <serverData>
-      <paths name="GPA-SAM-745">
+      <paths name="ash@192.168.0.37:22">
         <serverdata>
           <mappings>
-            <mapping deploy="ds4drv" local="$PROJECT_DIR$/../ds4drv" web="/" />
-            <mapping deploy="src-ash-nvm" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/ash" local="$PROJECT_DIR$" />
           </mappings>
           <excludedPaths>
             <excludedPath local="true" path="$PROJECT_DIR$/records" />
@@ -14,6 +13,14 @@
           </excludedPaths>
         </serverdata>
       </paths>
+      <paths name="nvidia@192.168.0.37:22">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>

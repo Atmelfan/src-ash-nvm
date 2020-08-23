@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "vectors.proto";
+
+message Target {
+    // UUID for this target
+    string uuid = 1;
+
+    // Position in image
+    Vec2 image_position = 2;
+    Vec2 size = 3;
+
+    // Estimated target location
+    Vec2 angle = 4;
+    Vec3 position = 5;
+
+    // Information
+    bool primary = 6;
+
+    // 'tag' or 'key=value'
+    repeated string values = 7;
+}
+
+message FrameComplete {
+    uint32 frame_count = 1;
+    uint32 target_count = 2;
+    uint32 calc_time = 3;
+}

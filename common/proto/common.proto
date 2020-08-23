@@ -19,6 +19,7 @@ message Exit {
         KEYBOARD_INTERRUPT = 1;
         EXCEPTION = 2;
         COMMAND = 3;
+        UNKNOWN = 4;
     }
 
     exit_reason reason = 2;

@@ -62,6 +62,10 @@ class Csci(object):
         self.exit = False
 
         self.logger.debug("Connecting...")
+        exit_msg = common_pb2.Exit()
+        exit_msg.msg = "Disconnected"
+        exit_msg.reason = common_pb2.Exit.UNKNOWN
+        self.mqtt.will_set('shutdown/unknown/' + self.name, payload=exit_msg.SerializeToString(), qos=0)
         self.mqtt.connect(self.args.host, port=self.args.port)
 
         # MQTT logging handler

@@ -1,0 +1,5 @@
+paho-mqtt == 1.5.0
+protobuf == 3.11.3
+colorlog == 4.1.0
+pyserial == 3.4
+psutil == 5.7.2

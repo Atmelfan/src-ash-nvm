@@ -21,17 +21,19 @@ class HostCsci(Csci):
                                help="Host is only allowed to watch the host, not act on it")
         host_args.add_argument('--tx2', action='store_true',
                                help="TX2 has extra temperature sensors not exposed through normal API")
+        host_args.add_argument('--period', type=float, default=60.0,
+                               help="Period to sample information with")
 
     def shutdown(self):
         super().shutdown()
 
     def run(self):
-        time.sleep(5)
         self.logger.debug("Updating host statistics")
         self.update_cpu()
         self.update_memory()
         self.update_network()
         self.update_thermal()
+        time.sleep(self.args.period)
 
     def update_cpu(self):
         frequencies = psutil.cpu_freq(percpu=True)
@@ -47,9 +49,9 @@ class HostCsci(Csci):
 
     def update_memory(self):
         mem = psutil.virtual_memory()
-        self.mqtt.publish(self.get_sub_topic("mem/used"), payload=str(mem.used))
-        self.mqtt.publish(self.get_sub_topic("mem/available"), payload=str(mem.available))
-        self.mqtt.publish(self.get_sub_topic("mem/total"), payload=str(mem.total))
+        self.mqtt.publish(self.get_sub_topic("mem/used"), payload=str(mem.used / 1024.0))
+        self.mqtt.publish(self.get_sub_topic("mem/available"), payload=str(mem.available / 1024.0))
+        self.mqtt.publish(self.get_sub_topic("mem/total"), payload=str(mem.total / 1024.0))
 
     def update_network(self):
         interfaces = psutil.net_io_counters(pernic=True)
@@ -89,7 +91,7 @@ class HostCsci(Csci):
                        '/sys/class/thermal/thermal_zone7']
             thermal_zones = {self.read_proc_value(path+'/type')[0]: self.read_proc_value(path+'/temp') for path in sensors}
             for tz, value in thermal_zones.items():
-                self.mqtt.publish(self.get_sub_topic("temp/%s/%s" % (tz, 'temp')), payload=str(float(value[0])/1000.0))
+                self.mqtt.publish(self.get_sub_topic("temp/%s/%s" % (tz.strip().lower(), 'temp')), payload=str(float(value[0])/1000.0))
 
             # Power monitoring
             ina3221s = ['/sys/bus/i2c/drivers/ina3221x/0-0041/iio_device',
@@ -98,7 +100,7 @@ class HostCsci(Csci):
                 for ch in range(0, 3):
                     rail, values = self.read_ina3221(ina, ch)
                     for meas, value in values.items():
-                        self.mqtt.publish(self.get_sub_topic("rail/%s/%s" % (rail, meas)),
+                        self.mqtt.publish(self.get_sub_topic("rail/%s/%s" % (rail.strip().lower(), meas.strip())),
                                           payload=str(float(value) / 1000.0))
 
             # Fan speed
@@ -113,7 +115,7 @@ class HostCsci(Csci):
                     if not label:
                         label = 't'+str(index)
                         index += 1
-                    self.mqtt.publish(self.get_sub_topic("temp/%s/%s" % (sensor, label)), payload=str(temp.current))
+                    self.mqtt.publish(self.get_sub_topic("temp/%s/%s" % (sensor.strip().lower(), label.strip())), payload=str(temp.current))
             index = 0
             fan_controllers = psutil.sensors_fans()
             for controller, fans in fan_controllers.items():
